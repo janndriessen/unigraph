@@ -20,6 +20,8 @@
 		69A5BFAC2654562C0087F501 /* AllTokensQuery.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 69A5BFAB2654562C0087F501 /* AllTokensQuery.graphql */; };
 		69AB501B265947E80022A85D /* tokenlist.json in Resources */ = {isa = PBXBuildFile; fileRef = 69AB501A265947E80022A85D /* tokenlist.json */; };
 		69AB501D265A64410022A85D /* data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB501C265A64410022A85D /* data.swift */; };
+		69AB501F265BABA10022A85D /* AllPairsDayQuery.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 69AB501E265BABA10022A85D /* AllPairsDayQuery.graphql */; };
+		69AB5021265BAD500022A85D /* AllPairsHourlyQuery.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 69AB5020265BAD500022A85D /* AllPairsHourlyQuery.graphql */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,8 @@
 		69A5BFAB2654562C0087F501 /* AllTokensQuery.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = AllTokensQuery.graphql; sourceTree = "<group>"; };
 		69AB501A265947E80022A85D /* tokenlist.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tokenlist.json; sourceTree = "<group>"; };
 		69AB501C265A64410022A85D /* data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = data.swift; sourceTree = "<group>"; };
+		69AB501E265BABA10022A85D /* AllPairsDayQuery.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = AllPairsDayQuery.graphql; sourceTree = "<group>"; };
+		69AB5020265BAD500022A85D /* AllPairsHourlyQuery.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = AllPairsHourlyQuery.graphql; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 				697356F82654244000414F08 /* Assets.xcassets */,
 				697356FD2654244000414F08 /* Info.plist */,
 				697356FA2654244000414F08 /* Preview Content */,
+				69AB501E265BABA10022A85D /* AllPairsDayQuery.graphql */,
+				69AB5020265BAD500022A85D /* AllPairsHourlyQuery.graphql */,
 				69A5BFAB2654562C0087F501 /* AllTokensQuery.graphql */,
 				697DBD4E26545E4E001B5316 /* schema.json */,
 				69AB501A265947E80022A85D /* tokenlist.json */,
@@ -162,7 +168,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				697356FC2654244000414F08 /* Preview Assets.xcassets in Resources */,
+				69AB501F265BABA10022A85D /* AllPairsDayQuery.graphql in Resources */,
 				697356F92654244000414F08 /* Assets.xcassets in Resources */,
+				69AB5021265BAD500022A85D /* AllPairsHourlyQuery.graphql in Resources */,
 				69A5BFAC2654562C0087F501 /* AllTokensQuery.graphql in Resources */,
 				69AB501B265947E80022A85D /* tokenlist.json in Resources */,
 			);

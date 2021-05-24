@@ -53,7 +53,7 @@ struct ContentView: View {
         }
         .onAppear {
             dataStore.parseTokenlist()
-            dataStore.fetch()
+            dataStore.fetch2()
             selectedListId = dataStore.lists.first?.id ?? nil
         }
     }

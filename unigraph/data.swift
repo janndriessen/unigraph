@@ -42,12 +42,43 @@ class DataStore: ObservableObject {
         client.fetch(query: AllTokensQueryQuery()) { result in
             switch result {
             case .success(let response):
-                //                print(response.data?.pairs)
                 guard let pairs = response.data?.pairs else { return }
                 let listItems: [ListItem] = pairs.map { pair in
                     let volumeFormatted = self.numberFormatter(Double(pair.volumeUsd) ?? 0)
-                    print(pair.volumeUsd, volumeFormatted)
                     return ListItem(title: "\(pair.token0.symbol)-\(pair.token1.symbol)", subtitle: "UNI-V2", detail: volumeFormatted)
+                }
+                self.listItems = listItems
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+
+    func fetch2() {
+        client.fetch(query: AllPairsDayQuery()) { result in
+            switch result {
+            case .success(let response):
+                guard let datas = response.data?.pairDayDatas else { return }
+                let listItems: [ListItem] = datas.map { pair in
+                    let volumeFormatted = self.numberFormatter(Double(pair.dailyVolumeUsd) ?? 0)
+                    return ListItem(title: "\(pair.token0.symbol)-\(pair.token1.symbol)", subtitle: "UNI-V2", detail: volumeFormatted)
+                }
+                self.listItems = listItems
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+
+    func fetch3() {
+        client.fetch(query: AllPairsHourlyQuery()) { result in
+            switch result {
+            case .success(let response):
+                guard let datas = response.data?.pairHourDatas else { return }
+                let listItems: [ListItem] = datas.map { data in
+                    let volumeFormatted = self.numberFormatter(Double(data.hourlyVolumeUsd) ?? 0)
+                    print(volumeFormatted, data.hourlyVolumeUsd)
+                    return ListItem(title: "\(data.pair.token0)-\(data.pair.token1.symbol)", subtitle: "UNI-V2", detail: volumeFormatted)
                 }
                 self.listItems = listItems
             case .failure(let error):
@@ -102,7 +133,7 @@ extension DataStore {
             result = n
         }
 
-        let volumeFormatted = String(format: "%.2f\(amount)", result)
+        let volumeFormatted = String(format: "$%.2f\(amount)", result)
         return volumeFormatted
     }
 }

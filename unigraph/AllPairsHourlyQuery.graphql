@@ -1,0 +1,13 @@
+query AllPairsHourly {
+    pairHourDatas(orderBy: hourlyVolumeUSD, orderDirection: desc) {
+    pair {
+      token0 {
+        symbol
+      }
+      token1 {
+        symbol
+      }
+    }
+    hourlyVolumeUSD
+  }
+}
