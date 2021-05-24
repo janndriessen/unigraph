@@ -1,0 +1,11 @@
+query AllTokensQuery {
+  pairs(orderBy: volumeUSD, orderDirection: desc) {
+    token0 {
+      symbol
+    }
+    token1 {
+      symbol
+    }
+    volumeUSD
+  }
+}
