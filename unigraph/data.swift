@@ -35,6 +35,7 @@ extension TokenPairList {
 
 class DataStore: ObservableObject {
     @Published var listItems: [ListItem] = []
+    @Published var listItems2: [ListItem] = []
     private (set) var lists = TokenPairList.lists
     private lazy var client = ApolloClient(url: URL(string: "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2")!)
 
@@ -63,24 +64,7 @@ class DataStore: ObservableObject {
                     let volumeFormatted = self.numberFormatter(Double(pair.dailyVolumeUsd) ?? 0)
                     return ListItem(title: "\(pair.token0.symbol)-\(pair.token1.symbol)", subtitle: "UNI-V2", detail: volumeFormatted)
                 }
-                self.listItems = listItems
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-
-    func fetch3() {
-        client.fetch(query: AllPairsHourlyQuery()) { result in
-            switch result {
-            case .success(let response):
-                guard let datas = response.data?.pairHourDatas else { return }
-                let listItems: [ListItem] = datas.map { data in
-                    let volumeFormatted = self.numberFormatter(Double(data.hourlyVolumeUsd) ?? 0)
-                    print(volumeFormatted, data.hourlyVolumeUsd)
-                    return ListItem(title: "\(data.pair.token0)-\(data.pair.token1.symbol)", subtitle: "UNI-V2", detail: volumeFormatted)
-                }
-                self.listItems = listItems
+                self.listItems2 = listItems
             case .failure(let error):
                 print(error)
             }
