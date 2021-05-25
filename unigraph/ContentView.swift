@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct HeaderView: View {
+    var title: String
     var body: some View {
         HStack {
-            Text("🦄 Uniswap Pools")
+            Text(title)
                 .bold()
                 .padding(.horizontal, 16)
                 .padding(.top, 16)
@@ -19,40 +20,11 @@ struct HeaderView: View {
     }
 }
 
-struct FilterListView: View {
-    var lists: [TokenPairList]
-    @Binding var ascending: Bool
-    @Binding var selectedListId: UUID?
-
-    var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                Spacer()
-                ForEach(lists, id: \.id) { list in
-                    FilterView(arrowUp: ascending, selected: selectedListId == list.id, selectedColor: list.selectedColor, title: list.title)
-                        .animation(.spring())
-                        .onTapGesture {
-                            let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-                            feedbackGenerator.impactOccurred()
-                            if selectedListId == list.id {
-                                ascending.toggle()
-                                return
-                            }
-                            ascending = false
-                            selectedListId = list.id
-                        }
-                }
-            }
-        }
-        .frame(height: 32)
-        .padding(.bottom, 4)
-    }
-}
-
 struct ContentView: View {
     @ObservedObject private var dataStore = DataStore()
     @State private var ascending: Bool = false
     @State private var selectedListId: UUID?
+    @State private var selectedListListId: UUID?
 
     private func listItems() -> [ListItem] {
         let listItems = selectedListId == dataStore.lists.first?.id ?? nil ? dataStore.listItems : dataStore.listItems2
@@ -65,8 +37,16 @@ struct ContentView: View {
     var body: some View {
         ScrollView {
             VStack {
-                HeaderView()
-                FilterListView(lists: dataStore.lists, ascending: $ascending, selectedListId: $selectedListId)
+                HeaderView(title: "Lists")
+                ListFilterView(lists: dataStore.lists2, selectedListId: $selectedListListId)
+                VStack {
+                    ForEach(dataStore.trendingItems, id: \.id) { item in
+                        ListCell(title: item.title, subtitle: item.subtitle)
+                    }
+                }
+                .padding(.bottom, 16)
+                HeaderView(title: "🦄 Uniswap Pools")
+                UniswapFilterListView(lists: dataStore.lists, ascending: $ascending, selectedListId: $selectedListId)
                 VStack {
                     ForEach(listItems(), id: \.id) { item in
                         ListItemView(title: item.title, subtitle: item.subtitle, highlightColor: dataStore.getTokenPairList(for: selectedListId ?? UUID())?.selectedColor ?? .blue, detail: item.detail)
@@ -79,6 +59,7 @@ struct ContentView: View {
             dataStore.fetch()
             dataStore.fetch2()
             selectedListId = dataStore.lists.first?.id ?? nil
+            selectedListListId = dataStore.lists2.first?.id ?? nil
         }
     }
 }

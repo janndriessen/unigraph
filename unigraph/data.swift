@@ -16,6 +16,21 @@ struct ListItem {
     let detail: String
 }
 
+struct List: Hashable {
+    let id = UUID()
+    let title: String
+}
+
+extension List {
+    static var lists = [
+        List(title: "🔥 Trending"),
+        List(title: "📺 Watchlist"),
+        List(title: "⭐️Favorites"),
+        List(title: "🎢 DeFi"),
+        List(title: "💵 Stablecoins"),
+    ]
+}
+
 struct TokenPairList {
     let id = UUID()
     let selectedColor: Color
@@ -34,10 +49,19 @@ extension TokenPairList {
 }
 
 class DataStore: ObservableObject {
+    @Published var trendingItems: [ListItem] = []
     @Published var listItems: [ListItem] = []
     @Published var listItems2: [ListItem] = []
+    private (set) var lists2 = List.lists
     private (set) var lists = TokenPairList.lists
     private lazy var client = ApolloClient(url: URL(string: "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2")!)
+
+    init() {
+        trendingItems = [
+            ListItem(title: "Matic", subtitle: "$1.42", detail: "-16.94%"),
+            ListItem(title: "Shiba Inu", subtitle: "$0.00000769", detail: "-16.65%"),
+        ]
+    }
 
     func fetch() {
         client.fetch(query: AllTokensQueryQuery()) { result in
